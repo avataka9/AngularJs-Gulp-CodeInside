@@ -1,0 +1,30 @@
+{
+  "name": "angularjs-gulp-codeinside",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avataka9/AngularJs-Gulp-CodeInside.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/avataka9/AngularJs-Gulp-CodeInside/issues"
+  },
+  "homepage": "https://github.com/avataka9/AngularJs-Gulp-CodeInside#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2"
+  },
+  "dependencies": {
+    "angular": "^1.7.8",
+    "angular-route": "^1.7.8"
+  }
+}
