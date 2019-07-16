@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp"
+    "start": "gulp --mode development",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/avataka9/AngularJs-Gulp-CodeInside#readme",
   "devDependencies": {
     "browser-sync": "^2.26.7",
+    "del": "^5.0.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-uglify": "^3.0.2"

@@ -1,49 +1,80 @@
 'use scrict';
 
-/* base */
-const { src, dest, parallel, lastRun, watch } = require('gulp');
+/* BASE */
+const { src, dest, parallel, lastRun, watch, series } = require('gulp');
 const concat = require('gulp-concat');
 
-/* script */
+/* CLEAN */
+const del = require('del');
+
+/* SCRIPTS */
 const uglify = require('gulp-uglify');
 
-/* server */
+/* SERVER */
 const browserSync = require('browser-sync').create();
 
-/* paths */
+/* MODE */
+const argv = require('yargs').argv;
+const isDev = argv.mode === 'development';
+
+/* PATHS */
 const path = {
   src: {
-    styles: 'assets/scss/**/*.scss',
-    scripts: 'assets/js/**/*.js',
-    images: ['img/**/*.jpg','img/**/*.png']
+    styles: 'app/src/assets/scss/**/*.css',
+    scripts: [
+      "./node_modules/angular/angular.js",
+      "./node_modules/angular-route/angular-route.js",
+      "app/src/app.module.js",
+      "app/src/controllers/**/*.js",
+      'app/src/assets/js/**/*.js'
+    ],
+    html: 'app/src/**/*.html',
+    images: ['app/src/assets/img/**/*.jpg','app/src/assets/img/**/*.png']
   },
   dest: {
-    styles: 'css',
-    scripts: 'js',
-    images: 'img'
+    styles: 'app/public/css',
+    scripts: 'app/public/js',
+    html: 'app/public',
+    images: 'app/public/img'
   },
   watch: {
-    styles: 'assets/scss/**/*.scss',
-    scripts: 'assets/js/**/*.js',
-    html: '*.html'
+    styles: 'app/src/**/*.css',
+    scripts: 'app/src/**/*.js',
+    html: 'app/src/**/*.html'
   }
 };
 
+/* TASKS */
+function clean() {
+  return new Promise(function(resolve, reject) {
+    del.sync([
+      path.dest.html
+    ]);
+    resolve();
+  });
+}
 
 function html() {
-  return src('client/templates/*.pug')
-    .pipe(dest('build/html'))
+  //script();
+  return src(path.src.html)
+    .pipe(dest(path.dest.html))
 }
 
-function css() {
-  return src('client/templates/*.less')
-    .pipe(dest('build/css'))
+function style() {
+  return src(path.src.styles, (isDev ? { sourcemaps: true } : {}) )
+    .pipe(concat('app.css'))
+    .pipe(dest(path.dest.styles, (isDev ? { sourcemaps: true } : {}) ))
 }
 
-function js() {
-  return src('client/javascript/*.js', { sourcemaps: true })
-    .pipe(concat('all.js'))
-    .pipe(dest('build/js', { sourcemaps: true }))
+function script() {
+  return src(path.src.scripts, (isDev ? { sourcemaps: true } : {}) )
+    .pipe(concat('app.js'))
+    .pipe(dest(path.dest.scripts, (isDev ? { sourcemaps: true } : {}) ))
+}
+
+function images() {
+ return src(path.src.images)
+ .pipe(dest(path.dest.images));
 }
 
 function server() {
@@ -51,12 +82,14 @@ function server() {
     open: true,
     port: 8080,
     ui: {port: 8081},
-    server: {baseDir: ''}
+    server: {baseDir: 'app/public'}
   });
 
-  gulp.watch(path.watch.html).on('change', gulp.series(browserSync.reload));
-  gulp.watch(path.watch.styles).on('change', gulp.series('style', browserSync.reload));
-  gulp.watch(path.watch.scripts).on('change', gulp.series('script', browserSync.reload));
+  watch(path.watch.html).on('change', series('html', browserSync.reload));
+
+  watch(path.watch.styles).on('change', series('style', browserSync.reload));
+
+  watch(path.watch.scripts).on('change', series('script', browserSync.reload));
 }
 
 /*function copy() {
@@ -64,9 +97,11 @@ function server() {
     .pipe(dest('output/'));
 }*/
 
-
-exports.js = js;
-exports.css = css;
+exports.script = script;
+exports.style = style;
 exports.html = html;
+exports.images = images;
+exports.clean = clean;
 //exports.copy = copy;
-exports.default = parallel(html, css, js);
+exports.build = parallel(images, style, script, html);
+exports.default = series(clean, parallel(images, style, script, html), server);
