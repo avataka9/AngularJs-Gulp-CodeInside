@@ -25,8 +25,16 @@ const path = {
       "./node_modules/angular/angular.js",
       "./node_modules/angular-route/angular-route.js",
       "app/src/app.module.js",
-      "app/src/controllers/**/*.js",
-      'app/src/assets/js/**/*.js'
+      "app/src/app.config.js",
+      "app/src/pages/**/*.js"/*,
+      "app/src/pages/home/pageHome.module.js",
+      "app/src/pages/home/pageHome.component.js",
+      "app/src/pages/404/page404.module.js",
+      "app/src/pages/404/page404.component.js",
+      "app/src/pages/header.module.js",
+      "app/src/pages/header.component.js",
+      "app/src/pages/footer.module.js",
+      "app/src/pages/footer.component.js",*/
     ],
     html: 'app/src/**/*.html',
     images: ['app/src/assets/img/**/*.jpg','app/src/assets/img/**/*.png']
