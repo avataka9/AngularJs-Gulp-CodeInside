@@ -10,6 +10,12 @@ const del = require('del');
 /* SCRIPTS */
 const uglify = require('gulp-uglify');
 
+/* STYLES */
+const sass = require('gulp-sass');
+sass.compiler = require('node-sass');
+const postCSS = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
+
 /* SERVER */
 const browserSync = require('browser-sync').create();
 
@@ -20,13 +26,16 @@ const isDev = argv.mode === 'development';
 /* PATHS */
 const path = {
   src: {
-    styles: 'app/src/assets/scss/**/*.css',
+    styles: [
+      './node_modules/normalize.css/normalize.css',
+      'app/src/assets/scss/**/*.scss'
+    ],
     scripts: [
-      "./node_modules/angular/angular.js",
-      "./node_modules/angular-route/angular-route.js",
-      "app/src/app.module.js",
-      "app/src/app.config.js",
-      "app/src/pages/**/*.js"/*,
+			"app/src/assets/js/**/*.js",
+			"./node_modules/angular/angular.js",
+			"./node_modules/angular-route/angular-route.js",
+			"app/src/app.module.js",
+			"app/src/app.config.js",
       "app/src/pages/home/pageHome.module.js",
       "app/src/pages/home/pageHome.component.js",
       "app/src/pages/404/page404.module.js",
@@ -34,7 +43,7 @@ const path = {
       "app/src/pages/header.module.js",
       "app/src/pages/header.component.js",
       "app/src/pages/footer.module.js",
-      "app/src/pages/footer.component.js",*/
+      "app/src/pages/footer.component.js",
     ],
     html: 'app/src/**/*.html',
     images: ['app/src/assets/img/**/*.jpg','app/src/assets/img/**/*.png']
@@ -46,7 +55,7 @@ const path = {
     images: 'app/public/img'
   },
   watch: {
-    styles: 'app/src/**/*.css',
+    styles: 'app/src/**/*.scss',
     scripts: 'app/src/**/*.js',
     html: 'app/src/**/*.html'
   }
@@ -70,6 +79,8 @@ function html() {
 
 function style() {
   return src(path.src.styles, (isDev ? { sourcemaps: true } : {}) )
+		.pipe(sass().on('error', sass.logError))
+		.pipe(postCSS([ autoprefixer() ]))
     .pipe(concat('app.css'))
     .pipe(dest(path.dest.styles, (isDev ? { sourcemaps: true } : {}) ))
 }

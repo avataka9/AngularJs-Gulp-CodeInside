@@ -7,9 +7,10 @@ angular.module('studentApp')
           template: '<page-home></page-home>'
         })
         .otherwise({
-          redirectTo: '/'
+          //redirectTo: '/',
+					template: '<page-404></page-404>'
         });
 
-      //$locationProvider.html5Mode(true);
+      $locationProvider.html5Mode(true);
     }
   ]);

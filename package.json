@@ -19,11 +19,16 @@
   },
   "homepage": "https://github.com/avataka9/AngularJs-Gulp-CodeInside#readme",
   "devDependencies": {
+    "autoprefixer": "^9.6.1",
     "browser-sync": "^2.26.7",
     "del": "^5.0.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-uglify": "^3.0.2"
+    "gulp-postcss": "^8.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "node-sass": "^4.12.0",
+    "normalize.css": "^8.0.1"
   },
   "dependencies": {
     "angular": "^1.7.8",
