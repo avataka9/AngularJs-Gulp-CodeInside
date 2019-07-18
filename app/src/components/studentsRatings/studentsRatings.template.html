@@ -1,0 +1,98 @@
+<div class="studentsRatings">
+  <div class="studentsRatings__title">
+    Let's check your ratings and choose your destiny
+  </div>
+
+  <div  class="studentsRatings-Subject">
+    <div class="studentsRatings-Subject__subject">
+      <label>Subject's name:<br>
+        <input type="text"
+               name="subject"
+               ng-model="$ctrl.info.subject"
+               ng-model-options="{ updateOn: 'blur' }"
+               ng-disabled="$ctrl.fillingStarted()"
+               placeholder="History"
+               class="studentsRatings-Subject__name">
+      </label>
+      <label>Number of ratings:<br>
+        <input type="number"
+               ng-model="$ctrl.info.numberRatings"
+               ng-change="$ctrl.createArray()"
+               ng-disabled="$ctrl.fillingStarted()"
+               name="ratings-number"
+               min="0" max="50"
+               class="studentsRatings-Subject__number">
+      </label>
+    </div>
+
+    <div class="studentsRatings-Subject__filling">
+      Chose variant of filling:
+      <label>Manual<br>
+        <input type="radio"
+               ng-model="$ctrl.info.fillingMode"
+               ng-disabled="$ctrl.fillingStarted()"
+               name="fillingMode"
+               value="manual"
+               class="studentsRatings-Subject__radio">
+      </label>
+      <label>Auto<br>
+        <input type="radio"js перебор массива for
+               ng-model="$ctrl.info.fillingMode"
+               ng-disabled="$ctrl.fillingStarted()"
+               name="fillingMode"
+               value="auto"
+               class="studentsRatings-Subject__radio">
+      </label>
+    </div>
+  </div>
+
+  <div ng-if="$ctrl.showRatings()">
+    <form name="form"
+          novalidate
+          class=""
+          ng-submit="$ctrl.nextFillingPosition()"
+          ng-if="$ctrl.showAutofiller()">
+      <input type="number"
+             name="rating"
+             min="0" max="5"
+             ng-model="$ctrl.info.ratings[$ctrl.info.fillingPosition]"
+             ng-model-options="{debounce: { default: 500 }}"
+             class="">
+      <input type="submit"
+             value="next"
+             class=""/>
+    </form>
+      <div>
+        <input ng-repeat="(index, rating) in $ctrl.info.ratings track by $index"
+               ng-model="$ctrl.info.ratings[index]"
+               ng-disabled="index > $ctrl.info.fillingPosition"
+               type="number"
+               name="rating"
+               min="1" max="5"
+               class="">
+      </div>
+
+  </div>
+
+
+  <input type="submit"
+         value="check"
+         class="studentsRatings-Subject__button"/>
+  <input type="submit"
+         value="reset"
+         ng-click="$ctrl.reset()"
+         class="studentsRatings-Subject__button"/>
+
+
+  <div>
+    <pre>
+      subject: {{$ctrl.info.subject}}
+      numberRatings: {{$ctrl.info.numberRatings}}
+      fillingMode: {{$ctrl.info.fillingMode}}
+      ratings: {{$ctrl.info.ratings}}
+      fillingPosition: {{$ctrl.info.fillingPosition}}
+      fillingStarted: {{$ctrl.fillingStarted()}}
+    </pre>
+  </div>
+
+</div>

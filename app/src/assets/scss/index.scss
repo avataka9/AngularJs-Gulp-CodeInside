@@ -63,3 +63,27 @@ body {
   padding: 5vh 30px;
   flex: 0 0 auto;
 }
+
+.studentsRatings-Subject {
+
+  &__subject {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+
+    label:last-child {
+      margin-left: 10px;
+    }
+  }
+
+  &__filling {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    label {
+      margin-left: 10px;
+      text-align: center;
+    }
+  }
+}

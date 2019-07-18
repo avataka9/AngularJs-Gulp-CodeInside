@@ -1,4 +1,4 @@
-angular.module('studentApp')
+angular.module('app')
   .config([
     '$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
@@ -11,6 +11,6 @@ angular.module('studentApp')
 					template: '<page-404></page-404>'
         });
 
-      $locationProvider.html5Mode(true);
+      //$locationProvider.html5Mode(true);
     }
   ]);

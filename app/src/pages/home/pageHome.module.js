@@ -1,1 +1,3 @@
-angular.module('pageHome', []);
+angular.module('pageHome', [
+  'studentsRatings'
+]);

@@ -44,6 +44,8 @@ const path = {
       "app/src/pages/header.component.js",
       "app/src/pages/footer.module.js",
       "app/src/pages/footer.component.js",
+      "app/src/components/studentsRatings/studentsRatings.module.js",
+      "app/src/components/studentsRatings/studentsRatings.component.js",
     ],
     html: 'app/src/**/*.html',
     images: ['app/src/assets/img/**/*.jpg','app/src/assets/img/**/*.png']

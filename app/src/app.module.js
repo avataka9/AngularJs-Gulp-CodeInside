@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('studentApp', [
+angular.module('app', [
   'ngRoute',
   'pageHome',
   'page404',
