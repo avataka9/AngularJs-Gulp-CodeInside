@@ -38,6 +38,7 @@ body {
   flex: 1 0 auto;
   display: flex;
   justify-content: center;
+  padding: 30px;
 
   &__left {}
 
@@ -64,26 +65,70 @@ body {
   flex: 0 0 auto;
 }
 
-.studentsRatings-Subject {
+.studentsRatings {
 
-  &__subject {
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-
-    label:last-child {
-      margin-left: 10px;
-    }
+  input[type = number] {
+    text-align: center;
   }
 
-  &__filling {
+  &__title {
+    font-size: 20px;
+  }
+
+  &__rowFirst,
+  &__rowSecond,
+  &__rowFourth{
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
 
+    label:not(:first-child) {
+      margin-left: 10px;
+    }
+  }
+
+  &__rowSecond {
     label {
       margin-left: 10px;
-      text-align: center;
     }
+  }
+
+  &__rowthird {
+    & > input {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__ratings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    input {
+      margin: 1.5px;
+    }
+  }
+
+  &__error {
+    border: 1px dashed darkred;
+    border-radius: 3px;
+    padding: 3px;
+    color: darkred;
+  }
+
+  &__decision {
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid darkgoldenrod;
+    text-align: center;
+  }
+}
+
+pre {
+  opacity: .5;
+  transition: .3s;
+
+  &:hover {
+    opacity: 1;
   }
 }

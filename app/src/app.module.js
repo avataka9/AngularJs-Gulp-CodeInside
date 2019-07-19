@@ -2,8 +2,9 @@
 
 angular.module('app', [
   'ngRoute',
+	'ngSanitize',
   'pageHome',
-  'page404',
+  'queryTest',
   'header',
   'footer'
 ]);

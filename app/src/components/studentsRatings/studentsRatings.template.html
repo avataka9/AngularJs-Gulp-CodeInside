@@ -1,98 +1,201 @@
 <div class="studentsRatings">
-  <div class="studentsRatings__title">
-    Let's check your ratings and choose your destiny
-  </div>
-
-  <div  class="studentsRatings-Subject">
-    <div class="studentsRatings-Subject__subject">
-      <label>Subject's name:<br>
-        <input type="text"
-               name="subject"
-               ng-model="$ctrl.info.subject"
-               ng-model-options="{ updateOn: 'blur' }"
-               ng-disabled="$ctrl.fillingStarted()"
-               placeholder="History"
-               class="studentsRatings-Subject__name">
-      </label>
-      <label>Number of ratings:<br>
-        <input type="number"
-               ng-model="$ctrl.info.numberRatings"
-               ng-change="$ctrl.createArray()"
-               ng-disabled="$ctrl.fillingStarted()"
-               name="ratings-number"
-               min="0" max="50"
-               class="studentsRatings-Subject__number">
-      </label>
+    <div class="studentsRatings__title">
+        Let's check your ratings and choose your destiny
     </div>
 
-    <div class="studentsRatings-Subject__filling">
-      Chose variant of filling:
-      <label>Manual<br>
-        <input type="radio"
-               ng-model="$ctrl.info.fillingMode"
-               ng-disabled="$ctrl.fillingStarted()"
-               name="fillingMode"
-               value="manual"
-               class="studentsRatings-Subject__radio">
-      </label>
-      <label>Auto<br>
-        <input type="radio"js перебор массива for
-               ng-model="$ctrl.info.fillingMode"
-               ng-disabled="$ctrl.fillingStarted()"
-               name="fillingMode"
-               value="auto"
-               class="studentsRatings-Subject__radio">
-      </label>
-    </div>
-  </div>
+    <form name="firstForm">
+        <div class="studentsRatings__rowFirst">
+            <label>Subject's name:<br>
+                <input type="text"
+                       name="subject"
+                       placeholder="History e.g."
+                       required
+                       ng-model="$ctrl.info.subject"
+                       ng-disabled="$ctrl.fillingStarted()">
+                <span class="studentsRatings__error"
+                      ng-if="firstForm.subject.$error.requared">
+                    You must write subject's name
+                </span>
+            </label>
 
-  <div ng-if="$ctrl.showRatings()">
-    <form name="form"
-          novalidate
-          class=""
-          ng-submit="$ctrl.nextFillingPosition()"
-          ng-if="$ctrl.showAutofiller()">
-      <input type="number"
-             name="rating"
-             min="0" max="5"
-             ng-model="$ctrl.info.ratings[$ctrl.info.fillingPosition]"
-             ng-model-options="{debounce: { default: 500 }}"
-             class="">
-      <input type="submit"
-             value="next"
-             class=""/>
+            <label ng-show="$ctrl.isSubjectFilled()">
+                Quantity of ratings:<br>
+                <input type="number"
+                       name="ratingsQuantity"
+                       min="0" max="50"
+                       ng-model="$ctrl.info.quantityRatings"
+                       ng-change="$ctrl.createArray()"
+                       ng-disabled="$ctrl.fillingStarted()">
+                <span class="studentsRatings__error"
+                      ng-if="firstForm.ratingsQuantity.$error.max">
+                    quantity must be < 50
+                </span>
+                <span class="studentsRatings__error"
+                      ng-if="firstForm.ratingsQuantity.$error.min">
+                    quantity must be > 0
+                </span>
+                <span class="studentsRatings__error"
+                      ng-if="firstForm.ratingsQuantity.$error.number">
+                    wrong quantity
+                </span>
+            </label>
+        </div>
+
+        <div ng-show="$ctrl.isSubjectFilled()"
+             class="studentsRatings__rowSecond">
+            Chose variant of filling:
+            <label>Manual<br>
+                <input type="radio"
+                       name="fillingMode"
+                       value="manual"
+                       ng-model="$ctrl.info.fillingMode"
+                       ng-disabled="$ctrl.fillingStarted()">
+            </label>
+            <label>Semi-auto<br>
+                <input type="radio"
+                       name="fillingMode"
+                       value="auto"
+                       ng-model="$ctrl.info.fillingMode"
+                       ng-disabled="$ctrl.fillingStarted()">
+            </label>
+        </div>
     </form>
-      <div>
-        <input ng-repeat="(index, rating) in $ctrl.info.ratings track by $index"
-               ng-model="$ctrl.info.ratings[index]"
-               ng-disabled="index > $ctrl.info.fillingPosition"
-               type="number"
-               name="rating"
-               min="1" max="5"
-               class="">
-      </div>
 
-  </div>
+    <div ng-if="$ctrl.showRatings()"
+         class="studentsRatings__rowThird">
+        <form name="secondForm"
+              ng-submit="$ctrl.nextFillingPosition()">
+            <input type="number"
+                   name="rating"
+                   title="rating"
+                   min="0" max="5"
+                   ng-if="$ctrl.showAutofiller()"
+                   ng-model="$ctrl.info.ratings[$ctrl.info.fillingPosition]"
+                   ng-model-options="{debounce: { default: 500 }}">
+            <input type="submit"
+                   value="next"
+                   ng-if="$ctrl.showAutofiller()"/>
+            <br><br>
+            Fill ratings:
+            <div class="studentsRatings__ratings">
+                <input type="number"
+                       name="rating"
+                       title="rating"
+                       min="1" max="5"
+                       ng-repeat="(index, rating) in $ctrl.info.ratings track by $index"
+                       ng-model="$ctrl.info.ratings[index]"
+                       ng-disabled="index > $ctrl.info.fillingPosition">
+            </div>
+            <br>
+            <span class="studentsRatings__error"
+                  ng-if="secondForm.rating.$error.max">
+                rating must be < 5
+            </span>
+            <span class="studentsRatings__error"
+                  ng-if="secondForm.rating.$error.min">
+                rating must be > 0
+            </span>
+            <span class="studentsRatings__error"
+                  ng-if="secondForm.rating.$error.number">
+                wrong rating
+            </span>
+        </form>
+    </div>
+    <br>
+    <div ng-if="$ctrl.showSkips()"
+         class="studentsRatings__rowFourth">
+        <form name="thirdForm">
+            <label>Total lessons:<br>
+                <input type="number"
+                       name="lessons"
+                       min="{{$ctrl.info.ratings.length}}" max="50"
+                       ng-model="$ctrl.info.totalLessons">
+            </label>
+            <label>Skipped:<br>
+                <input type="number"
+                       name="skiped"
+                       min="0" max="{{$ctrl.info.totalLessons}}"
+                       ng-model="$ctrl.info.skippedLessons">
+            </label>
+            <label>Without reason:<br>
+                <input type="number"
+                       name="wthReason"
+                       min="0" max="{{$ctrl.info.skippedLessons}}"
+                       ng-model="$ctrl.info.skippedWithoutReason">
+            </label>
+        </form>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.lessons.$error.max">
+            quantity lessons must be < 50
+        </span>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.lessons.$error.min">
+            quantity lessons must be > quantity ratings
+        </span>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.lessons.$error.number">
+            wrong quantity lessons
+        </span>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.skiped.$error.max">
+            quantity skipped must be < quantity lessons
+        </span>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.skiped.$error.min">
+            quantity skipped must be > 0
+        </span>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.skiped.$error.number">
+            wrong quantity skiped
+        </span>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.wthReason.$error.max">
+            quantity without reason must be < quantity skiped
+        </span>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.wthReason.$error.min">
+            quantity without reason must be > 0
+        </span>
+        <span class="studentsRatings__error"
+              ng-if="thirdForm.wthReason.$error.number">
+            wrong quantity without reason
+        </span>
+    </div>
 
+    <br><br>
+    <input type="button"
+           value="check"
+           ng-click="$ctrl.check()"/>
+    <input type="button"
+           value="reset"
+           ng-click="$ctrl.reset()"/>
 
-  <input type="submit"
-         value="check"
-         class="studentsRatings-Subject__button"/>
-  <input type="submit"
-         value="reset"
-         ng-click="$ctrl.reset()"
-         class="studentsRatings-Subject__button"/>
-
-
-  <div>
+    <br><br>
+    <div class="studentsRatings__decision">
+        {{$ctrl.info.decision}}
+    </div>
+    <br><br>
+    <input type="button"
+           value="send"
+           ng-if="$ctrl.info.finished"
+           ng-click="$ctrl.send()">
+    <br><br><br>
     <pre>
       subject: {{$ctrl.info.subject}}
-      numberRatings: {{$ctrl.info.numberRatings}}
+      isSubjectFilled: {{$ctrl.isSubjectFilled()}}
+      quantityRatings: {{$ctrl.info.quantityRatings}}
       fillingMode: {{$ctrl.info.fillingMode}}
       ratings: {{$ctrl.info.ratings}}
+      ratingsLength: {{$ctrl.info.ratings.length}}
       fillingPosition: {{$ctrl.info.fillingPosition}}
       fillingStarted: {{$ctrl.fillingStarted()}}
+      showSkips: {{$ctrl.showSkips()}}
+      totalLessons: {{$ctrl.info.totalLessons}}
+      skippedLessons: {{$ctrl.info.skippedLessons}}
+      skippedWithoutReason: {{$ctrl.info.skippedWithoutReason}}
+      decision: {{$ctrl.info.decision}}
+      finished: {{$ctrl.info.finished}}
+      serverAnswer: {{$ctrl.info.serverAnswer}}
     </pre>
-  </div>
 
 </div>

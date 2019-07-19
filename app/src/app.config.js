@@ -6,9 +6,11 @@ angular.module('app')
         .when('/', {
           template: '<page-home></page-home>'
         })
+				.when('/queryTest', {
+					template: '<query-test></query-test>'
+				})
         .otherwise({
-          //redirectTo: '/',
-					template: '<page-404></page-404>'
+          redirectTo: '/',
         });
 
       //$locationProvider.html5Mode(true);
