@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: Roboto, sans-serif;
+}
+
+.header {
+  background: #607D8B;
+  color: white;
+  padding: 5vh 30px;
+
+  .nav-link {
+    color: white;
+    font-size: 20px;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus {
+    background: rgba(0,0,0,0.3);
+  }
+
+  .nav-pills .nav-item.open .nav-link,
+  .nav-pills .nav-item.open .nav-link:hover,
+  .nav-pills .nav-item.open .nav-link:focus {
+    background: rgba(0,0,0,0.3);
+  }
+}
+
+.wrapper {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+
+  &__left {}
+
+  &__center {
+    max-width: 1140px;
+    width: 100%;
+  }
+
+  &__right {}
+
+  @media (max-width: 1300px) {
+    &__left,
+    &__right {
+      display: none;
+    }
+  }
+}
+
+.footer {
+  text-align: center;
+  background: #607D8B;
+  color: white;
+  padding: 5vh 30px;
+  flex: 0 0 auto;
+}
+
+.studentsRatings {
+
+  input[type = number] {
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 20px;
+  }
+
+  &__rowFirst,
+  &__rowSecond,
+  &__rowFourth{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    label:not(:first-child) {
+      margin-left: 10px;
+    }
+  }
+
+  &__rowSecond {
+    label {
+      margin-left: 10px;
+    }
+  }
+
+  &__rowthird {
+    & > input {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__ratings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    input {
+      margin: 1.5px;
+    }
+  }
+
+  &__error {
+    border: 1px dashed darkred;
+    border-radius: 3px;
+    padding: 3px;
+    color: darkred;
+  }
+
+  &__decision {
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid darkgoldenrod;
+    text-align: center;
+  }
+}
+
+pre {
+  opacity: .5;
+  transition: .3s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
