@@ -1,5 +1,3 @@
-//TODO make this component better and more beautiful
-
 angular.module('studentsRatings').component('studentsRatings', {
 	templateUrl: 'components/studentsRatings/studentsRatings.template.html',
 	controller: ['$http', function StudentsRatingsCtrl($http) {

@@ -9,12 +9,14 @@ const del = require('del');
 
 /* SCRIPTS */
 const uglify = require('gulp-uglify');
+const babel = require('gulp-babel');
 
 /* STYLES */
 const sass = require('gulp-sass');
 sass.compiler = require('node-sass');
 const postCSS = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
+const cssmin = require('gulp-cssmin');
 
 /* SERVER */
 const browserSync = require('browser-sync').create();
@@ -85,12 +87,17 @@ function style() {
 		.pipe(sass().on('error', sass.logError))
 		.pipe(postCSS([ autoprefixer() ]))
     .pipe(concat('app.css'))
+    .pipe(cssmin())
     .pipe(dest(path.dest.styles, (isDev ? { sourcemaps: true } : {}) ))
 }
 
 function script() {
   return src(path.src.scripts, (isDev ? { sourcemaps: true } : {}) )
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
     .pipe(concat('app.js'))
+    .pipe(uglify())
     .pipe(dest(path.dest.scripts, (isDev ? { sourcemaps: true } : {}) ))
 }
 
