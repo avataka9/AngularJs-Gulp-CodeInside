@@ -1,6 +1,5 @@
 # AngularJs-Gulp-CodeInside
 
-<<<<<<< HEAD
 Install
 =======
 
